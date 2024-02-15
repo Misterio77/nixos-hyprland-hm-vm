@@ -2,23 +2,27 @@
   nixpkgs.hostPlatform = "x86_64-linux";
   system.stateVersion = "23.11";
 
-  users.users.misterio = {
+  hardware.opengl.enable = true;
+  security.polkit.enable = true;
+
+  users.users.fulano = {
     extraGroups = ["wheel"];
     isNormalUser = true;
   };
 
-  hardware.opengl.enable = true;
-  security.polkit.enable = true;
-
-  home-manager.users.misterio = import ./home.nix;
+  home-manager = {
+    users.fulano = import ./home.nix;
+    useUserPackages = true;
+  };
 
   # If running on VM
   virtualisation.vmVariant = {
-    services.getty.autologinUser = "misterio";
+    services.getty.autologinUser = "fulano";
     security.sudo.wheelNeedsPassword = false;
+    services.spice-vdagentd.enable = true;
 
     virtualisation.qemu.options = [
-      "-vga none"
+      "-vga virtio"
       "-device virtio-vga-gl"
       "-display gtk,gl=on,show-cursor=off"
     ];
