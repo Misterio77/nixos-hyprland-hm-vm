@@ -15,12 +15,14 @@
     useUserPackages = true;
   };
 
-  # If running on VM
+  # If running on VM. E.g. through:
+  # nix run .#nixosConfiguration.nixos.config.system.build.vm
   virtualisation.vmVariant = {
+    # Autologin, passwordless sudo
     services.getty.autologinUser = "fulano";
     security.sudo.wheelNeedsPassword = false;
-    services.spice-vdagentd.enable = true;
 
+    # QEMU options to run hardware-accelerated VM
     virtualisation.qemu.options = [
       "-vga virtio"
       "-device virtio-vga-gl"
