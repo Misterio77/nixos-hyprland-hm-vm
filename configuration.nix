@@ -25,8 +25,8 @@
     # QEMU options to run hardware-accelerated VM
     virtualisation.qemu.options = [
       "-vga virtio"
-      "-device virtio-vga-gl"
-      "-display gtk,gl=on,show-cursor=off"
+      "-device virtio-gpu-gl"
+      "-display gtk,gl=on"
     ];
   };
 }
